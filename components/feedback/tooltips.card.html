@@ -1,0 +1,55 @@
+<!-- @dsCard group="Components" viewport="700x330" name="Feedback · Tooltips" subtitle="Interactivo: pasa el cursor · Titulo On/Off × Flecha arriba · abajo · izquierda · derecha" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px;background:var(--surface-page);font-family:var(--font-brand)}.label{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin:0}.bar{display:flex;align-items:center;gap:16px;margin-bottom:20px}.seg{display:inline-flex;border:1px solid var(--border-default);border-radius:8px;overflow:hidden}.seg button{appearance:none;border:none;background:var(--white);padding:7px 14px;font-family:var(--font-brand);font-size:13px;font-weight:500;color:var(--text-body);cursor:pointer}.seg button+button{border-left:1px solid var(--border-default)}.seg button[aria-pressed=true]{background:var(--cyan-500);color:var(--white)}.hint{font-size:12px;color:var(--text-muted)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.cell{display:flex;flex-direction:column;align-items:center;gap:10px;height:118px;justify-content:center}.trig{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;border:1px solid var(--border-default);background:var(--white);color:var(--cyan-700);cursor:pointer;transition:background var(--dur-action) var(--ease-standard),border-color var(--dur-action) var(--ease-standard)}.trig:hover{background:var(--cyan-100);border-color:var(--cyan-500)}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const { Tooltip, Icon } = window.AseguradoraDelSurDesignSystem_031691;
+  const ARROWS = ['arriba', 'abajo', 'izquierda', 'derecha'];
+  function App() {
+    const [conTitulo, setConTitulo] = React.useState(true);
+    const [pinned, setPinned] = React.useState(false);
+    return (
+      <div>
+        <div className="bar">
+          <p className="label">Titulo</p>
+          <div className="seg">
+            <button aria-pressed={!conTitulo} onClick={() => setConTitulo(false)}>Sin título</button>
+            <button aria-pressed={conTitulo} onClick={() => setConTitulo(true)}>Con título</button>
+          </div>
+          <p className="label" style={{ marginLeft: 8 }}>Visibilidad</p>
+          <div className="seg">
+            <button aria-pressed={!pinned} onClick={() => setPinned(false)}>Hover</button>
+            <button aria-pressed={pinned} onClick={() => setPinned(true)}>Fijos</button>
+          </div>
+          <span className="hint">{pinned ? 'Todos visibles' : 'Pasa el cursor sobre un ícono'}</span>
+        </div>
+        <div className="grid">
+          {ARROWS.map(a => (
+            <div className="cell" key={a}>
+              <Tooltip arrow={a} open={pinned ? true : undefined}
+                title={conTitulo ? 'Title' : undefined} label="Description">
+                <button className="trig" aria-label={'Tooltip flecha ' + a}>
+                  <Icon name="InformativoCircleHelp" size={22} />
+                </button>
+              </Tooltip>
+              <p className="label">{a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

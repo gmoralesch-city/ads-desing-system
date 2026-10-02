@@ -1,0 +1,21 @@
+<!-- @dsCard group="Spacing" viewport="700x160" name="Radius" subtitle="Corner radii from 4px to pill" -->
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;padding:28px;background:#fff;font-family:var(--font-brand);}
+  .row{display:flex;gap:22px;align-items:flex-end;}
+  .item{display:flex;flex-direction:column;gap:8px;align-items:center;}
+  .box{width:80px;height:64px;background:var(--cyan-100);border:1.5px solid var(--cyan-500);}
+  .n{font-size:12px;font-weight:700;color:var(--text-strong);}
+  .v{font-size:11px;color:var(--text-muted);}
+</style></head>
+<body>
+<div class="row">
+  <div class="item"><div class="box" style="border-radius:var(--radius-xs)"></div><span class="n">xs</span><span class="v">4 · cards</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-sm)"></div><span class="n">sm ★</span><span class="v">8 · buttons</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-md)"></div><span class="n">md</span><span class="v">16</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-lg)"></div><span class="n">lg</span><span class="v">24</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-xl)"></div><span class="n">xl</span><span class="v">40 · hero</span></div>
+  <div class="item"><div class="box" style="border-radius:var(--radius-pill);width:120px"></div><span class="n">pill</span><span class="v">999 · FAB</span></div>
+</div>
+</body></html>

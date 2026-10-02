@@ -1,0 +1,36 @@
+<!-- @dsCard group="Components" viewport="700x260" name="Brand · Logo (Imagotipo)" subtitle="ADS + Sur One wordmarks and real marks" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:28px;background:var(--surface-page);font-family:var(--font-brand)}.row{display:flex;flex-wrap:wrap;gap:36px;align-items:center}.dark{background:var(--surface-navy);border-radius:16px;padding:20px 28px;display:inline-flex;gap:36px;align-items:center}.label{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const { Logo } = window.AseguradoraDelSurDesignSystem_031691;
+  function App(){
+    return (<div>
+      <p className="label">Real marks (assets/logos)</p>
+      <div className="row" style={{marginBottom:24}}>
+        <img src="../../assets/logos/ads-isotipo.svg" alt="ADS isotipo" style={{height:56}}/>
+        <img src="../../assets/logos/ads-horizontal.png" alt="ADS" style={{height:44}}/>
+        <img src="../../assets/logos/sur-one.png" alt="Sur One" style={{height:40}}/>
+      </div>
+      <p className="label">Type wordmarks</p>
+      <div className="row">
+        <Logo brand="ads" size={22}/>
+        <Logo brand="surone" size={26}/>
+        <div className="dark"><Logo brand="ads" color="light" size={22}/><Logo brand="surone" color="light" size={26}/></div>
+      </div>
+    </div>);
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!-- @dsCard group="Renovaciones" viewport="1440x860" name="Módulo de renovaciones" subtitle="Tabla de renovaciones de fianzas + modales" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema de renovaciones · Aseguradora del Sur</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { background: #fff; }
+  #root { min-height: 100vh; display: flex; flex-direction: column; }
+  .ren-row:hover { background: var(--table-row-hover); }
+  .row-act { appearance: none; border: none; background: transparent; cursor: pointer; color: var(--text-muted); display: inline-flex; padding: 2px; border-radius: 6px; transition: var(--transition-action); }
+  .row-act:hover { color: var(--color-brand-dark); background: var(--cyan-100); }
+  .pg-arrow { width: 34px; height: 34px; border-radius: var(--radius-sm); border: 1px solid var(--border-default); background: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; color: var(--text-body); }
+  .pg-arrow:hover { background: var(--neutral-100); }
+  .field-icon-btn { background: transparent; border: none; cursor: pointer; }
+  /* modal */
+  .modal-scrim { position: fixed; inset: 0; background: var(--scrim-modal); display: flex; align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto; z-index: 100; }
+  .modal-card { position: relative; background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-modal); padding: 40px; max-width: 100%; }
+  .modal-x { position: absolute; top: 20px; right: 20px; appearance: none; border: none; background: transparent; cursor: pointer; color: var(--neutral-400); }
+  .modal-x:hover { color: var(--text-strong); }
+  .dropzone { height: 52px; border: 1.5px dashed var(--border-strong); border-radius: var(--radius-sm); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted); font-family: var(--font-brand); font-size: 15px; }
+  .dropzone:hover { border-color: var(--color-brand); color: var(--color-brand-dark); }
+  .ghost-btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 20px; border-radius: var(--radius-sm); border: none; background: var(--color-brand); color: #fff; font-family: var(--font-brand); font-weight: 600; font-size: 16px; cursor: pointer; transition: var(--transition-action); }
+  .ghost-btn:hover { background: var(--color-brand-dark); box-shadow: var(--shadow-button); }
+  .search-box { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 16px; border: 1.5px solid var(--border-default); border-radius: var(--radius-sm); min-width: 280px; }
+  .search-box input { border: none; outline: none; flex: 1; font-family: var(--font-brand); font-size: 15px; color: var(--text-strong); background: transparent; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react" src="TopBar.jsx"></script>
+<script type="text/babel" data-presets="react" src="Sidebar.jsx"></script>
+<script type="text/babel" data-presets="react" src="RenovacionesTable.jsx"></script>
+<script type="text/babel" data-presets="react" src="NuevoPedidoModal.jsx"></script>
+<script type="text/babel" data-presets="react" src="DetallesModal.jsx"></script>
+<script type="text/babel" data-presets="react" src="RenovacionesFooter.jsx"></script>
+<script type="text/babel" data-presets="react">
+  const { Button, Alert } = window.AseguradoraDelSurDesignSystem_031691;
+  function App() {
+    const [modal, setModal] = React.useState(null); // 'nuevo' | 'detalles' | null
+    const [nav, setNav] = React.useState(0);
+    const [aviso, setAviso] = React.useState(true);
+    const [guardado, setGuardado] = React.useState(false);
+    React.useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
+    return (
+      <React.Fragment>
+        <TopBar />
+        <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+          <Sidebar active={nav} onSelect={setNav} />
+          <main style={{ flex: 1, minWidth: 0, padding: '40px 48px', overflowX: 'auto' }}>
+            {/* page header */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, marginBottom: 32 }}>
+              <div>
+                <h1 style={{ fontFamily: 'var(--font-brand)', fontWeight: 300, fontSize: 44, color: 'var(--text-strong)', margin: '0 0 6px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  Sistema de renovaciones
+                  <i data-lucide="help-circle" style={{ width: 22, height: 22, color: 'var(--neutral-400)' }}></i>
+                </h1>
+                <p style={{ fontFamily: 'var(--font-brand)', fontSize: 18, color: 'var(--text-muted)', margin: 0 }}>Te mostramos tus renovaciones de fianzas</p>
+              </div>
+              <Button variant="primary" size="lg" onClick={() => setModal('nuevo')}
+                iconLeft={<i data-lucide="plus" style={{ width: 20, height: 20 }}></i>}>Ingresar pedido</Button>
+            </div>
+            {aviso && (
+              <Alert tone="danger" style={{ marginBottom: 24 }}
+                onClose={() => setAviso(false)}
+                link={{ label: 'Ver solo las vencidas', onClick: () => setAviso(false) }}>
+                3 fianzas vencen esta semana. Renuévalas antes del viernes para que tus clientes no pierdan la cobertura.
+              </Alert>
+            )}
+            {guardado && (
+              <Alert tone="success" style={{ marginBottom: 24 }} onClose={() => setGuardado(false)}>
+                Pedido ingresado. Lo enviamos a revisión y te avisamos cuando se emita la póliza.
+              </Alert>
+            )}
+            {/* toolbar */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
+              <div className="search-box">
+                <input placeholder="Buscar por póliza, asegurado, contratista…" />
+                <i data-lucide="search" style={{ width: 18, height: 18, color: 'var(--text-muted)' }}></i>
+              </div>
+              <button className="ghost-btn"><i data-lucide="sliders-horizontal" style={{ width: 18, height: 18 }}></i>Filtrar</button>
+            </div>
+            <RenovacionesTable onDetails={() => setModal('detalles')} />
+          </main>
+        </div>
+        <RenovacionesFooter />
+        {modal === 'nuevo' && <NuevoPedidoModal onClose={() => setModal(null)} onSaved={() => { setModal(null); setGuardado(true); }} />}
+        {modal === 'detalles' && <DetallesModal onClose={() => setModal(null)} />}
+      </React.Fragment>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

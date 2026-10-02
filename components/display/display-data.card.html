@@ -1,0 +1,49 @@
+<!-- @dsCard group="Components" viewport="700x420" name="Display · Data: table, list, box, calendar" subtitle="Table · ListItem · Box · Calendar · Insignia" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:28px;background:var(--surface-subtle);font-family:var(--font-brand)}.label{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px}.row{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const { Table, ListItem, Box, Calendar, Insignia, Badge } = window.AseguradoraDelSurDesignSystem_031691;
+  const rows=[{poliza:'VEH-0912',ramo:'Vehicular',estado:<Badge tone="success">Vigente</Badge>,monto:'98,00'},{poliza:'VID-3320',ramo:'Vida',estado:<Badge tone="warning">Por vencer</Badge>,monto:'42,00'},{poliza:'HOG-1188',ramo:'Hogar',estado:<Badge tone="success">Vigente</Badge>,monto:'65,00'}];
+  function App(){
+    const [fecha,setFecha]=React.useState(new Date());
+    return (<div>
+      <div className="row" style={{marginBottom:22}}>
+        <div style={{flex:1,minWidth:320}}>
+          <p className="label">Table</p>
+          <Table columns={[{key:'poliza',label:'Póliza'},{key:'ramo',label:'Ramo'},{key:'estado',label:'Estado',render:r=>r.estado},{key:'monto',label:'Valor/mes',align:'right',render:r=>'$'+r.monto}]} rows={rows} onRowClick={()=>{}}/>
+          <p className="label" style={{marginTop:20}}>Insignia</p>
+          <Insignia tone="oro">Empresa 100% ecuatoriana</Insignia>
+        </div>
+        <div>
+          <p className="label">Calendar</p>
+          <Calendar value={fecha} onChange={setFecha}/>
+        </div>
+      </div>
+      <div className="row">
+        <div style={{flex:1,minWidth:280}}>
+          <p className="label">Box &amp; list items</p>
+          <Box title="Mis pólizas" padded={false}>
+            <div style={{padding:'4px 16px'}}>
+              <ListItem title="Póliza vehicular" subtitle="Vigente hasta 12/2026" trailing="›" onClick={()=>{}}/>
+              <ListItem title="Seguro de vida" subtitle="Vigente hasta 03/2027" trailing="›" onClick={()=>{}} divider={false}/>
+            </div>
+          </Box>
+        </div>
+      </div>
+    </div>);
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

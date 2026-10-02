@@ -1,0 +1,47 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Display · Chips, tags, steppers & services" subtitle="Chip · Tag · Stepper · Accordion · ServiceIcon · Seal" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:28px;background:var(--surface-subtle);font-family:var(--font-brand)}.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:22px}.label{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const { Chip, Tag, Stepper, Accordion, ServiceIcon, Seal } = window.AseguradoraDelSurDesignSystem_031691;
+  const Car=()=>(<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 17h2v-3.3a2 2 0 0 0-.4-1.2L18 9h-2"/><path d="M14 9h-4L7 12H3v5h2"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="16.5" cy="17.5" r="2"/></svg>);
+  const Heart=()=>(<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.5 1-1a5.5 5.5 0 0 0 0-7.9z"/></svg>);
+  const Home=()=>(<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>);
+  function App(){
+    const [sel,setSel]=React.useState('Vehicular');
+    return (<div>
+      <p className="label">Chips &amp; tags</p>
+      <div className="row">
+        {['Vehicular','Vida','Salud','Hogar'].map(c=><Chip key={c} selected={sel===c} onClick={()=>setSel(c)}>{c}</Chip>)}
+        <span style={{width:16}} />
+        <Tag tone="success">Vigente</Tag><Tag tone="admin">Admin</Tag><Tag tone="warning">Por vencer</Tag>
+      </div>
+      <p className="label">Servicios &amp; sellos</p>
+      <div className="row">
+        <ServiceIcon tone="cyan" icon={<Car/>} label="Vehicular" />
+        <ServiceIcon tone="navy" icon={<Heart/>} label="Vida" />
+        <ServiceIcon tone="teal" icon={<Home/>} label="Hogar" />
+        <span style={{width:8}} />
+        <Seal value="+30" caption="años" tier="oro" />
+        <Seal value="24/7" tier="brand" />
+      </div>
+      <p className="label">Stepper</p>
+      <div style={{maxWidth:560,marginBottom:20}}><Stepper steps={['Reportado','En evaluación','Aprobado','Indemnizado']} current={1} /></div>
+      <p className="label">Accordion</p>
+      <Accordion items={[{title:'¿Qué cubre mi deducible?',content:'El deducible es el valor que asumes en cada siniestro antes de que aplique la cobertura.'}]} />
+    </div>);
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

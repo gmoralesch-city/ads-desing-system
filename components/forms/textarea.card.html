@@ -1,0 +1,30 @@
+<!-- @dsCard group="Forms" viewport="700x300" name="Textarea" subtitle="Default · Fill · Fail · Disabled empty · Disabled fill" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:28px;background:var(--surface-page);font-family:var(--font-brand)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 32px;max-width:640px}.cap{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const { Textarea } = window.AseguradoraDelSurDesignSystem_031691;
+  const Cell = ({t,children}) => <div><p className="cap">{t}</p>{children}</div>;
+  function App(){
+    return (<div className="grid">
+      <Cell t="Default (clic para focus)"><Textarea label="Label" rows={2} /></Cell>
+      <Cell t="Fill"><Textarea label="Label" rows={2} value="Campo completo" onChange={()=>{}} /></Cell>
+      <Cell t="Fail"><Textarea label="Label" rows={2} value="Campo completo" onChange={()=>{}} error="Texto de ayuda" /></Cell>
+      <Cell t="Disabled empty"><Textarea label="Label" rows={2} disabled /></Cell>
+      <Cell t="Disabled fill"><Textarea label="Label" rows={2} value="Campo completo" disabled /></Cell>
+    </div>);
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

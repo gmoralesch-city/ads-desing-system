@@ -1,0 +1,33 @@
+<!-- @dsCard group="Figma kit" viewport="700x360" name="Materialized kit: icons & marks" subtitle="Exact glyphs and logos extracted from the Figma file" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;padding:28px;background:var(--surface-page);font-family:var(--font-brand)}.label{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin:0 0 14px}.grid{display:flex;flex-wrap:wrap;gap:18px;align-items:center}.cell{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:var(--surface-navy)}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const NS = window.AseguradoraDelSurDesignSystem_031691;
+  const iconNames = ['FuncionesCheck','FuncionesClose','FuncionesDelete','FuncionesEdit','FuncionesEye','FuncionesFavorite','FuncionesLock','FuncionesMenu','FlechasArrowRight','FlechasCaretDown','InformativoCircleInformation','InformativoCircleCheck','InformativoCircleWarning','ObjetosHome','ObjetosCreditCard','ObjetosCalendar','UsuarioUser','UsuarioCarro'];
+  function App(){
+    return (<div>
+      <p className="label">Íconos (real Figma glyphs)</p>
+      <div className="grid" style={{marginBottom:26}}>
+        {iconNames.map(n=>{const C=NS[n];return C?<div key={n} className="cell" title={n}><C/></div>:null;})}
+      </div>
+      <p className="label">Imagotipo</p>
+      <div className="grid">
+        {NS.ImagotipoADS?<div style={{transform:'scale(.8)',transformOrigin:'left center'}}><NS.ImagotipoADS/></div>:null}
+      </div>
+    </div>);
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

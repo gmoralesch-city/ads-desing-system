@@ -1,0 +1,77 @@
+<!-- @dsCard group="Forms" viewport="700x700" name="Forms in use" subtitle="Pago con tarjeta y datos del contratante (frame Forms del Figma)" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body{margin:0;padding:28px;background:var(--surface-page);font-family:var(--font-brand)}
+  .wrap{display:flex;flex-direction:column;gap:20px;max-width:350px;margin:0 auto}
+  .marcas{display:flex;flex-direction:column;gap:8px;padding-bottom:20px;align-items:center}
+  .marcas-t{font-size:16px;font-weight:500;line-height:100%;color:rgb(120,120,120);text-align:center}
+  .marcas-r{display:flex;flex-direction:row;gap:8px;justify-content:center;height:24px}
+  .fila{display:flex;flex-direction:row;gap:30px}
+  .cvv{display:flex;flex-direction:row;gap:8px;align-items:center;flex:1}
+  .sep{display:flex;align-items:center;gap:10px;justify-content:center;padding:4px 0}
+  .sep span{font-size:16px;font-weight:500;color:rgb(120,120,120)}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px 30px}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const NS = window.AseguradoraDelSurDesignSystem_031691;
+  const { Input, Button, Switch, Icon, Tarjetas } = NS;
+  const I = (n) => <Icon name={n} size={24} color="rgb(112,112,112)" />;
+
+  function App(){
+    const [nombre,setNombre]=React.useState('');
+    const [num,setNum]=React.useState('');
+    const [exp,setExp]=React.useState('');
+    const [cvv,setCvv]=React.useState('');
+    const [otros,setOtros]=React.useState(false);
+    const [f,setF]=React.useState({cedula:'',nombre:'',celular:'',correo:'',direccion:''});
+    const set=(k)=>(e)=>setF({...f,[k]:e.target.value});
+    return (
+      <div className="wrap">
+        <div className="marcas">
+          <div className="marcas-t">Aceptamos:</div>
+          <div className="marcas-r">
+            {['visa','mastercard','american express','diners club','discover'].map(m=>(
+              <Tarjetas key={m} marca={m} />
+            ))}
+          </div>
+        </div>
+        <Input label="Nombre en la tarjeta" value={nombre} onChange={e=>setNombre(e.target.value)} iconRight={I('UsuarioUser')} />
+        <Input label="Número de la tarjeta" value={num} onChange={e=>setNum(e.target.value)} iconRight={I('ObjetosCreditCard')} />
+        <div className="fila">
+          <Input label="MM/AA" value={exp} onChange={e=>setExp(e.target.value)} iconRight={I('ObjetosCalendar')} style={{flex:1}} />
+          <div className="cvv">
+            <Input label="CVV" value={cvv} onChange={e=>setCvv(e.target.value)} iconRight={I('FuncionesLock')} style={{flex:1}} />
+            <span style={{color:'rgb(112,112,112)',flexShrink:0,display:'inline-flex'}}>{I('InformativoCircleHelp')}</span>
+          </div>
+        </div>
+        <Button variant="primary" size="large" style={{alignSelf:'stretch'}}>Pagar</Button>
+        <div className="sep">
+          <Switch checked={otros} onChange={()=>setOtros(!otros)} />
+          <span>{otros ? 'Sí, cambiar a otros datos' : 'No, cambiar a otros datos'}</span>
+        </div>
+        <div className="duo">
+          <Input label="Cédula" value={f.cedula} onChange={set('cedula')} iconRight={I('UsuarioCedula')} />
+          <Input label="Nombre" value={f.nombre} onChange={set('nombre')} iconRight={I('UsuarioUser')} />
+          <Input label="Celular" value={f.celular} onChange={set('celular')} iconRight={I('DispositvosMobile')} />
+          <Input label="Correo" value={f.correo} onChange={set('correo')} iconRight={I('ComunicaciNEmail')} />
+        </div>
+        <Input label="Dirección" value={f.direccion} onChange={set('direccion')} iconRight={I('ObjetosHome')} />
+        <Button variant="primary" size="large" style={{alignSelf:'stretch'}}>Sí, continuar</Button>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

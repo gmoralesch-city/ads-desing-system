@@ -1,0 +1,59 @@
+<!-- @dsCard group="Forms" viewport="700x400" name="Input" subtitle="Boxed text field with full state matrix" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:24px 28px;background:var(--surface-page);font-family:var(--font-brand)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px;max-width:640px}.cell{display:flex;flex-direction:column;gap:7px}.tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}.tag b{color:var(--color-brand);font-weight:700}.hd{grid-column:1/-1;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--neutral-400);border-top:1px solid var(--border-subtle);padding-top:12px;margin:2px 0 -4px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+  const { Input, Icon } = window.AseguradoraDelSurDesignSystem_031691;
+  const I = n => <Icon name={n} size={24} />;
+  function Cell({ tag, children }) {
+    return <div className="cell"><span className="tag">{tag}</span>{children}</div>;
+  }
+  function App(){
+    const [live,setLive] = React.useState('');
+    return (<div className="grid">
+      <div className="hd">Sin icono</div>
+      <Cell tag="Default"><Input label="Correo electrónico" state="default" /></Cell>
+      <Cell tag="Focus"><Input label="Correo electrónico" state="focus" placeholder="tu@correo.com" /></Cell>
+      <Cell tag="Active"><Input label="Correo electrónico" state="active" value="ana.paredes@" /></Cell>
+      <Cell tag="Fill"><Input label="Correo electrónico" state="fill" value="ana.paredes@correo.com" /></Cell>
+      <Cell tag="Fail"><Input label="Cédula" state="fail" value="17094" error="Ingresa los 10 dígitos de tu cédula" /></Cell>
+      <Cell tag="Inactive (read-only)"><Input label="Número de póliza" state="inactive" value="POL-0042-118" /></Cell>
+      <Cell tag="Disabled (empty)"><Input label="Placa del vehículo" state="disabled" /></Cell>
+      <Cell tag="Disabled fill"><Input label="Placa del vehículo" state="disabled-fill" value="PCX-4412" /></Cell>
+
+      <div className="hd">Con icono</div>
+      <Cell tag="Default"><Input label="Correo electrónico" state="default" iconRight={I('ComunicaciNEmail')} /></Cell>
+      <Cell tag="Focus"><Input label="Correo electrónico" state="focus" placeholder="tu@correo.com" iconRight={I('ComunicaciNEmail')} /></Cell>
+      <Cell tag="Active"><Input label="Cédula" state="active" value="170945" iconRight={I('UsuarioCedula')} /></Cell>
+      <Cell tag="Fill"><Input label="Cédula" state="fill" value="1709451234" iconRight={I('UsuarioCedula')} /></Cell>
+      <Cell tag="Fail"><Input label="Celular" state="fail" value="099" error="El celular debe tener 10 dígitos" iconRight={I('DispositvosMobile')} /></Cell>
+      <Cell tag="Inactive (read-only)"><Input label="Titular" state="inactive" value="Ana Paredes" iconRight={I('UsuarioUser')} /></Cell>
+      <Cell tag="Disabled (empty)"><Input label="Dirección" state="disabled" iconRight={I('ObjetosHome')} /></Cell>
+      <Cell tag="Disabled fill"><Input label="Dirección" state="disabled-fill" value="Av. Amazonas N32-14" iconRight={I('ObjetosHome')} /></Cell>
+
+      <div className="hd">Interactivo — el estado se deriva solo</div>
+      <Cell tag="Escribe para ver default → focus → fill">
+        <Input label="Correo electrónico" value={live} onChange={e=>setLive(e.target.value)} placeholder="tu@correo.com"
+               helper="Te enviaremos aquí tu póliza" iconRight={I('ComunicaciNEmail')} />
+      </Cell>
+      <Cell tag="Validación en vivo (mín. 10 dígitos)">
+        <Input label="Cédula" value={live} onChange={e=>setLive(e.target.value)}
+               error={live && live.length < 10 ? 'Ingresa los 10 dígitos de tu cédula' : ''}
+               iconRight={I('UsuarioCedula')} />
+      </Cell>
+    </div>);
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
